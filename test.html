@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Supabase Test</title>
+</head>
+<body>
+    <h1>Matches</h1>
+    <div id="matches"></div>
+
+    <script type="module">
+        // 1. Import Supabase client
+        import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+
+        // 2. Your project keys (you will replace these)
+        const SUPABASE_URL = "https://fjuwfzzlfaatreeczsab.supabase.co";
+        const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZqdXdmenpsZmFhdHJlZWN6c2FiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI0NDExMzMsImV4cCI6MjA4ODAxNzEzM30.HpEa5RUy43AYh2EiBXnop68yyfY-Um8Bh2t7jimSdYs";
+
+        const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        // 3. Load matches from database
+        async function loadMatches() {
+            const { data, error } = await supabase
+                .from("matches")
+                .select("*");
+
+            if (error) {
+                document.getElementById("matches").innerText = "Error loading matches.";
+                console.error(error);
+                return;
+            }
+
+            document.getElementById("matches").innerHTML = data
+                .map(m => `${m.team1} vs ${m.team2} @ ${m.start_time}`)
+                .join("<br>");
+        }
+
+        loadMatches();
+    </script>
+</body>
+</html>

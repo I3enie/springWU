@@ -19,7 +19,7 @@
         <div id="match-list"></div>
     </main>
     <aside class="menu">
-        <a class="page" href="upcoming.html">Upcoming</a>
+        <a class="page" href="index.html">Ongoing</a>
         <a class="page" href="finished.html">Finished</a>
     </aside>
     <footer></footer>
@@ -28,10 +28,7 @@
 <script src="js/java.js"></script>
 <script type="module">
     import { loadMatches } from "./js/matches.js";
-    loadMatches("ongoing");
-
-    // Auto-refresh every 20 seconds
-    setInterval(() => loadMatches("ongoing"), 20000);
+    loadMatches("upcoming");
 </script>
 <script type="module" src="js/matches.js"></script>
 </body>

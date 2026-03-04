@@ -1,0 +1,237 @@
+body{
+    height: 100vh;
+    width: 100vw;
+    margin: 0;
+    overflow-x: hidden;
+}
+#wrapper{
+    height: 200vh;
+    display: grid;
+    grid-template-columns: 1fr 80vw;
+    grid-template-rows: 100px 1fr 100px;
+    grid-template-areas:
+    "hd hd"
+    "as mn"
+    "ft ft" ;
+
+}
+aside{
+    grid-area: as;
+    background-color: blue;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+header{
+    grid-area: hd;
+    background-color: lightblue;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    border-bottom: 5px solid blue;
+    box-shadow: 0 -5px 5px -5px blue inset;
+}
+main{
+    grid-area: mn;
+    background-color: #525252;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+footer{
+    grid-area: ft;
+    background-color: brown;
+}
+.match{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 20px;
+    background-color: gray;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    height: 90px;
+    width: 500px;
+    padding: 30px;
+}
+.match .teams{
+   
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+
+
+}
+.teams{
+    margin-top: -20px;
+
+}
+.score{
+   font-weight: bold;
+   font-size: 50px;
+}
+.logos{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 60px;
+}
+img{
+    height: 60px;
+}
+h2{
+    color: blue;
+    font-weight: bolder;
+}
+h3{
+    font-size: 35px;
+}
+.page{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    block-size: 100px;
+    border-radius: 20px;
+    background-color: darkslateblue;
+    width: 80%;
+    margin-top: 40px;
+    margin-bottom: 40px;
+    color: whitesmoke;
+    font-size: 20px;
+    text-decoration: none;
+}
+
+#login{
+    display:flex;
+    width: 100%;
+    height: 100%;
+    background-color: gray;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+}
+#loginwindow{
+    display: flex;
+    flex-direction: column;
+    height: 70%;
+    width: 60%;
+    background-color: whitesmoke;
+    border-radius: 20px;
+    align-items: center;
+    justify-content: center;
+    z-index: 6;
+}
+.emaillogin{
+    width: 70%;
+    height: 20%;
+    border-radius: 20px;
+    border-style: solid;
+    border-color: blue;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+}
+.password{
+    width: 70%;
+    height: 20%;
+    border-radius: 20px;
+    border-style: solid;
+    border-color: blue;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+}
+input{
+    border: 0;
+    background-color: whitesmoke;
+    height: 20%;
+    width: 70%;
+}
+.loginlogo{
+    font-size: 30px;
+    color: blue;
+}
+.loginbutton, #confirmlogin, #confirmsignup{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 40%;
+    width: auto;
+    background-color: blue;
+    color: whitesmoke;
+    text-decoration: none;
+    border-radius: 20px;
+    margin-right: 20px;
+    padding: 5px;
+}
+#confirmlogin{
+    height: 20px;
+    margin-top: 10px;
+}
+#confirmsignup{
+    height: 20px;
+    margin-top: 10px;
+}
+h1{
+    margin-right: auto;
+    margin-left: 30px;
+    color: blue;
+    font-weight: bolder;
+    font-size: 60px;
+}
+
+    #wrapper{
+        height: 200vh;
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: 100px 1fr 100px;
+        grid-template-areas:
+        "hd"
+        "mn"
+        "ft" ;
+    }
+    aside{
+        display: none;
+        position: fixed;
+        top: 0;
+        right: 0;
+        height: 400px;
+        width: 200px;
+        padding: 20px;
+        background: lightblue;
+        border-bottom-left-radius: 20px;
+        z-index: 999;
+    }
+    header{
+        z-index: 4;
+        position: relative;
+    }
+    .hamburger{
+        background: none;
+        border: none;
+        font-size: 30px;
+        display: block;
+        justify-self: center;
+        margin-right: 20px;
+    }
+    aside.open{
+       display: flex;
+    }
+
+.fade-layer{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.5);
+    display: none;
+    z-index: 5;
+}
+.fade-layer.visible{
+    display: block;
+}
