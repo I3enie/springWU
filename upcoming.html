@@ -15,8 +15,8 @@
         <button class="hamburger">☰</button>
     </header>
     <main>
-        <h3>Ongoing matches</h3>
-        <div id="match-list"></div>
+        <h3>Upcoming matches</h3>
+        <div id="match-list-upcoming"></div>
     </main>
     <aside class="menu">
         <a class="page" href="index.html">Ongoing</a>
@@ -27,9 +27,9 @@
 <div class="fade-layer" ></div>
 <script src="js/java.js"></script>
 <script type="module">
-    import { loadMatches } from "./js/matches.js";
+    import { loadMatches } from "./js/upcomingmatches.js";
     loadMatches("upcoming");
+    setInterval(() => loadMatches("ongoing"), 20000);
 </script>
-<script type="module" src="js/matches.js"></script>
 </body>
 </html>

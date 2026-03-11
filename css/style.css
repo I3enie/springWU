@@ -235,3 +235,10 @@ h1{
 .fade-layer.visible{
     display: block;
 }
+.time{
+    font-size: 20px;
+}
+.winner{
+    font-size: 30px;
+    color: blue;
+}

@@ -1,0 +1,26 @@
+{
+  "name": "springwu",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/I3enie/springWU.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/I3enie/springWU/issues"
+  },
+  "homepage": "https://github.com/I3enie/springWU#readme",
+  "dependencies": {
+    "@supabase/supabase-js": "^2.98.0",
+    "hltv": "^3.5.0",
+    "node-fetch": "^3.3.2"
+  }
+}
