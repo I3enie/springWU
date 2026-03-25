@@ -33,7 +33,7 @@ export async function loadMatches(status) {
         .map(
             (m) => `
                 <div class="match">
-                    <div class="event"><h2>${m.event}</h2></div>
+                    <div class="event"><h2>${m.league}</h2></div>
 
                     <div class="teams">
                         <h2>${m.team1}</h2>

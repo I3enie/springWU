@@ -12,7 +12,19 @@ document.getElementById("confirmsignup").onclick = async () => {
     const email = document.getElementById("emaillogin").value;
     const password = document.getElementById("password").value;
 
-    const { data, error } = await supabase.auth.signUp({ email, password });
+    if (!username || username.length > 10){
+        alert("Please choose a valid username. Max length 10 characters.")
+    }
+
+    const { data, error } = await supabase.auth.signUp({ 
+        email,
+        password,
+        options: {
+            data: {
+                username: username,
+            }
+        } 
+    });
 
     if (error) {
         alert("Error: " + error.message);

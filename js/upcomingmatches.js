@@ -29,22 +29,66 @@ export async function loadMatches(status) {
         return;
     }
 
-    container.innerHTML = data
-        .map(
-            (m) => `
-                <div class="match">
-                    <div class="event"><h2>${m.event}</h2></div>
 
-                    <div class="teams">
-                        <h2>${m.team1}</h2>
-                        <h2>${m.team2}</h2>
-                    </div>
+    container.innerHTML = data.map((m) => `
+    <div class="match">
+        <div class="event"><h2>${m.league}</h2>
+        <button class="predictbutton">☰</button></div>
 
-                    <div class="logos">
-                        <p class="time">${m.begin_at}</p>
-                    </div>
-                </div>
-            `
-        )
-        .join("");
+        <div class="teams">
+            <h2>${m.team1}</h2>
+            <h2>${m.team2}</h2>
+        </div>
+
+        <div class="logos">
+            <p class="time">${m.begin_at}</p>
+        </div>
+        <div class="predictionmenu">
+            <button class="teambutton1">Predict ${m.team1} wins</button>
+            <button class="teambutton2">Predict ${m.team2} wins</button>
+        </div>
+    </div>
+`).join("");
+
+// Listener 1 - toggle prediction menu
+container.querySelectorAll(".predictbutton").forEach((button) => {
+    button.addEventListener("click", () => {
+        const menu = button.closest(".match").querySelector(".predictionmenu");
+        menu.classList.toggle("open");
+        layer.classList.toggle("visible");
+    });
+});
+
+// Listener 2 - submit prediction
+container.querySelectorAll(".match").forEach((matchEl) => {
+    const matchIndex = Array.from(container.querySelectorAll(".match")).indexOf(matchEl);
+    const matchData = data[matchIndex];
+
+    async function submitPrediction(predictedWinner) {
+        const { data: { user } } = await supabase.auth.getUser();
+
+        if (!user) {
+            console.error("No user logged in");
+            return;
+        }
+
+        const { error } = await supabase
+            .from("predictions")
+            .insert({
+                user_id: user.id,
+                match_id: matchData.id,
+                predicted_winner: predictedWinner
+            });
+
+        if (error) {
+            console.error("Failed to save prediction:", error.message);
+        } else {
+            console.log(`Prediction saved: ${predictedWinner}`);
+        }
+    }
+
+    matchEl.querySelector(".teambutton1").addEventListener("click", () => submitPrediction(matchData.team1));
+    matchEl.querySelector(".teambutton2").addEventListener("click", () => submitPrediction(matchData.team2));
+
+});
 }

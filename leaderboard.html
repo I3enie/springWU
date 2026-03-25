@@ -15,22 +15,21 @@
         <button class="hamburger">☰</button>
     </header>
     <main>
-        <h3>Finished matches</h3>
-        <div id="match-list-finished"></div>
+        <h5>Global leaderboard</h5>
+        <div id="leaderboard"></div>
     </main>
     <aside class="menu">
         <a class="page" href="upcoming.html">Upcoming</a>
         <a class="page" href="index.html">Ongoing</a>
-        <a class="page" href="leaderboard.html">Leaderboard</a>
     </aside>
     <footer></footer>
 </div>
 <div class="fade-layer" ></div>
 <script src="js/java.js"></script>
 <script type="module">
-    import { loadMatches } from "./js/finished.js";
-    loadMatches("finished");
-    setInterval(() => loadMatches("ongoing"), 20000);
+    import { loadleaderboard } from "./js/loadleaderboard.js";
+    loadleaderboard();
+    setInterval(() => loadleaderboard(), 20000);
 </script>
 </body>
 </html>

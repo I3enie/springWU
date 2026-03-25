@@ -52,7 +52,7 @@ async function fetchMatches(status) {
       `?token=${PANDASCORE_TOKEN}` +
       `&per_page=100` +
       `${sortRules[status]}` +
-      `&include=games`; // important for live scores
+      `&include=games`;
 
     console.log(`Fetching ${status} matches…`);
     const response = await fetch(url);
@@ -72,13 +72,11 @@ function transformMatch(match, status) {
   let score1 = null;
   let score2 = null;
 
-  // Only calculate scores for running matches
   if (status === "running") {
     ({ score1, score2 } = getRunningScores(match));
   }
 
-  // For finished matches, store winner only
-  const winner = status === "finished" ? match.winner?.name ?? null : match.winner?.name ?? null;
+  const winner = match.winner?.name ?? null;
 
   return {
     id: match.id,
@@ -109,12 +107,74 @@ async function saveMatches(matches, status) {
   if (error) console.error("Supabase error:", error);
 }
 
+// ---------------- Evaluate Predictions & Award Points ----------------
+async function evaluatePredictionsAndAwardPoints() {
+  console.log("\n--- Evaluating predictions ---");
+
+  // 1. Fetch all completed matches with a winner
+  const { data: completedMatches, error: matchError } = await supabase
+    .from("matches")
+    .select("id, winner")
+    .not("winner", "is", null);
+
+  if (matchError) { console.error("Error fetching matches:", matchError); return; }
+  if (!completedMatches.length) { console.log("No completed matches found."); return; }
+
+  const matchIds = completedMatches.map(m => m.id);
+  const winnerByMatchId = Object.fromEntries(completedMatches.map(m => [m.id, m.winner]));
+
+  // 2. Fetch only predictions not yet scored
+  const { data: predictions, error: predError } = await supabase
+    .from("predictions")
+    .select("user_id, match_id, predicted_winner")
+    .in("match_id", matchIds)
+    .eq("scored", false);
+
+  if (predError) { console.error("Error fetching predictions:", predError); return; }
+  if (!predictions.length) { console.log("No unscored predictions found."); return; }
+
+  // 3. Tally points per user
+  const pointsToAdd = {};
+  for (const p of predictions) {
+    if (p.predicted_winner === winnerByMatchId[p.match_id]) {
+      pointsToAdd[p.user_id] = (pointsToAdd[p.user_id] || 0) + 1;
+    }
+  }
+
+  // 4. Award points via RPC
+  for (const [userId, pts] of Object.entries(pointsToAdd)) {
+    const { error: rpcError } = await supabase.rpc("increment_points", {
+      p_user_id: userId,
+      p_points: pts,
+    });
+    if (rpcError) console.error(`Error updating points for user ${userId}:`, rpcError);
+  }
+
+  // 5. Mark all evaluated predictions as scored
+  const { error: updateError } = await supabase
+    .from("predictions")
+    .upsert(
+      predictions.map(p => ({ user_id: p.user_id, match_id: p.match_id, scored: true })),
+      { onConflict: "user_id,match_id" }
+    );
+
+  if (updateError) console.error("Error marking predictions as scored:", updateError);
+
+  console.log(`Scored ${predictions.length} predictions, awarded points to ${Object.keys(pointsToAdd).length} users.`);
+}
+
 // ---------------- Sync Single Status ----------------
 async function syncStatus(status) {
   console.log(`\n=== SYNCING ${status.toUpperCase()} MATCHES ===`);
   const matches = await fetchMatches(status);
   console.log(`Received ${matches.length} matches`);
   await saveMatches(matches, status);
+
+  // Only evaluate predictions after syncing finished matches,
+  // since those are the only ones with a final winner
+  if (status === "finished") {
+    await evaluatePredictionsAndAwardPoints();
+  }
 }
 
 // ---------------- Sync All ----------------
@@ -129,11 +189,11 @@ async function syncAllMatches() {
 // ---------------- Start + Scheduler ----------------
 syncAllMatches();
 
-// Running matches — update often
+// Running matches — update every 30 seconds
 setInterval(() => syncStatus("running"), 30 * 1000);
 
 // Upcoming — update every 10 minutes
 setInterval(() => syncStatus("upcoming"), 10 * 60 * 1000);
 
-// Finished — update every 30 minutes
+// Finished + scoring — update every 30 minutes
 setInterval(() => syncStatus("finished"), 30 * 60 * 1000);
