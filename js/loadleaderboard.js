@@ -13,7 +13,6 @@ export async function loadleaderboard() {
     const { data, error } = await supabase
         .from("leaderboard")
         .select("*")
-        .eq("points" > 0)
         .order("id", { ascending: true });
 
     if (error) {
@@ -27,10 +26,11 @@ export async function loadleaderboard() {
         return;
     }
 
+
     container.innerHTML = data.map((m) => `
-    <div class="Player">
+    <div class="player">
         <h6>${m.user_id}</h6>
-        <p>${m.points}</h6>    
+        <p>${m.points}</p>    
     </div>
 `).join("");
 }

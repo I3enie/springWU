@@ -32,9 +32,8 @@ export async function loadMatches(status) {
 
     container.innerHTML = data.map((m) => `
     <div class="match">
-        <div class="event"><h2>${m.league}</h2>
-        <button class="predictbutton">☰</button></div>
-
+        <div class="event"><h2>${m.league}</h2></div>
+        <button class="predictbutton">☰</button>
         <div class="teams">
             <h2>${m.team1}</h2>
             <h2>${m.team2}</h2>
@@ -85,6 +84,7 @@ container.querySelectorAll(".match").forEach((matchEl) => {
         } else {
             console.log(`Prediction saved: ${predictedWinner}`);
         }
+        window.location.href = "upcoming.html"
     }
 
     matchEl.querySelector(".teambutton1").addEventListener("click", () => submitPrediction(matchData.team1));

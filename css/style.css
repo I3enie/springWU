@@ -1,8 +1,13 @@
 :root {
-    --minPadding:20px
+    --contrast:#8bf688;
+    --background:#2b3828;
+    --background2:#1a1a1a;
+    --contrast2:#eb0000;
+    --borderad:5px;
+    --font:"Lexend Giga", sans-serif;
 }
 
-
+@import url('https://fonts.googleapis.com/css2?family=Gajraj+One&family=Lexend+Giga:wght@100..900&display=swap');
 
 body{
     height: 100vh;
@@ -23,38 +28,36 @@ body{
 }
 aside{
     grid-area: as;
-    background-color: blue;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 header{
     grid-area: hd;
-    background-color: lightblue;
+    background-color: var(--background);
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    border-bottom: 5px solid blue;
-    box-shadow: 0 -5px 5px -5px blue inset;
+    border-bottom: 2px solid var(--contrast);
+    box-shadow: 0px 4px 8px -2px var(--contrast);
 }
 main{
     grid-area: mn;
-    background-color: #525252;
+    background-color: var(--background2);
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 footer{
     grid-area: ft;
-    background-color: brown;
 }
 .match{
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    border-radius: 20px;
-    background-color: gray;
+    border-radius: var(--borderad);
+    background-color: var(--background);
     margin-top: 30px;
     margin-bottom: 30px;
     height: 90px;
@@ -62,49 +65,52 @@ footer{
     padding: 30px;
 }
 .match .teams{
-   
     display: flex;
     width: 100%;
     justify-content: space-between;
-
-
 }
 .teams{
     margin-top: -20px;
-
+    height: 30px;
 }
 .score{
+    font-family: var(--font);
    font-weight: bold;
-   font-size: 50px;
+   font-size: 35px;
+   height: 35px;
 }
 .logos{
     display: flex;
     justify-content: center;
-    align-items: center;
     width: 100%;
-    height: 60px;
+    height: 20px;
+    color: var(--contrast2);
 }
 img{
     height: 60px;
 }
 h2{
-    color: blue;
+    font-family: var(--font);
+    color: var(--contrast);
     font-weight: bolder;
+    margin: 0;
 }
 h3{
+    font-family: var(--font);
     font-size: 35px;
+    color: var(--contrast);
 }
 .page{
     display: flex;
     align-items: center;
     justify-content: center;
     block-size: 100px;
-    border-radius: 20px;
-    background-color: darkslateblue;
+    border-radius: var(--borderad);
+    background-color: var(--background2);
     width: 80%;
     margin-top: 40px;
     margin-bottom: 40px;
-    color: whitesmoke;
+    color: var(--contrast);
     font-size: 20px;
     text-decoration: none;
 }
@@ -113,18 +119,18 @@ h3{
     display:flex;
     width: 100%;
     height: 100%;
-    background-color: gray;
     align-items: center;
     justify-content: center;
     z-index: 1;
+    background-color: var(--background2);
 }
 #loginwindow{
     display: flex;
     flex-direction: column;
     height: 70%;
     width: 60%;
-    background-color: whitesmoke;
-    border-radius: 20px;
+    background-color: var(--background);
+    border-radius: var(--borderad);
     align-items: center;
     justify-content: center;
     z-index: 6;
@@ -132,9 +138,9 @@ h3{
 .emaillogin{
     width: 70%;
     height: 20%;
-    border-radius: 20px;
+    border-radius: var(--borderad);
     border-style: solid;
-    border-color: blue;
+    border-color: var(--contrast);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -143,9 +149,9 @@ h3{
 .password{
     width: 70%;
     height: 20%;
-    border-radius: 20px;
+    border-radius: var(--borderad);
     border-style: solid;
-    border-color: blue;
+    border-color: var(--contrast);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -154,9 +160,9 @@ h3{
 .usernamelogin{
     width: 70%;
     height: 20%;
-    border-radius: 20px;
+    border-radius: var(--borderad);
     border-style: solid;
-    border-color: blue;
+    border-color: var(--contrast);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -164,13 +170,13 @@ h3{
 }
 input{
     border: 0;
-    background-color: whitesmoke;
+    background-color: var(--background);
     height: 20%;
     width: 70%;
 }
 .loginlogo{
     font-size: 30px;
-    color: blue;
+    color: var(--contrast);
 }
 .loginbutton, #confirmlogin, #confirmsignup{
     display: flex;
@@ -178,10 +184,10 @@ input{
     justify-content: center;
     height: 40%;
     width: auto;
-    background-color: blue;
-    color: whitesmoke;
+    background-color: var(--background2);
+    color: var(--contrast);
     text-decoration: none;
-    border-radius: 20px;
+    border-radius: var(--borderad);
     margin-right: 20px;
     padding: 5px;
 }
@@ -194,9 +200,10 @@ input{
     margin-top: 10px;
 }
 h1{
+    font-family: var(--font);
     margin-right: auto;
     margin-left: 30px;
-    color: blue;
+    color: var(--contrast);
     font-weight: bolder;
     font-size: 60px;
 }
@@ -219,8 +226,8 @@ h1{
         height: 400px;
         width: 200px;
         padding: 20px;
-        background: lightblue;
-        border-bottom-left-radius: 20px;
+        background: var(--background);
+        border-bottom-left-radius: 5px;
         z-index: 999;
     }
     header{
@@ -245,7 +252,7 @@ h1{
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(0,0,0,0.5);
+    background-color: rgba(32, 50, 20, 0.5);
     display: none;
     z-index: 5;
 }
@@ -254,10 +261,11 @@ h1{
 }
 .time{
     font-size: 20px;
+    margin-bottom: 30px;
 }
 .winner{
     font-size: 30px;
-    color: blue;
+    color: var(--contrast);
 }
 .predictionmenu{
     display: none;
@@ -265,8 +273,8 @@ h1{
     
     justify-content: center;
     align-items: center;
-    border-radius: 20px;
-    background-color: gray;
+    border-radius: var(--borderad);
+    background-color: var(--background);
     margin-top: 30px;
     margin-bottom: 30px;
     height: 90px;
@@ -279,7 +287,40 @@ h1{
 }
 .player{
     display: block;
-    border-radius: 20px;
+    border-radius: var(--borderad);
     height: 100px;
     width: 50%;
+}
+.predictbutton{
+    z-index: 10;
+    background: none;
+    border: none;
+    font-size: 35px;
+    height: 35px;
+}
+.event{
+    height: 27px;
+}
+p{
+    color: var(--contrast2);
+}
+h6{
+    color: var(--contrast2);
+}
+.player{
+    display: flex;
+    width: 500px;
+    height: 50px;
+    background-color: var(--background);
+}
+#ben{
+    font-size: 30px;
+    color: var(--contrast2);
+}
+footer{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--background2);
+    border-top: 2px solid var(--contrast);
 }
