@@ -7,7 +7,6 @@ const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 let currentUser = null;
 
-// --- SIGN UP ---
 document.getElementById("confirmsignup").onclick = async () => {
     const email = document.getElementById("emaillogin").value;
     const password = document.getElementById("password").value;
@@ -38,7 +37,7 @@ document.getElementById("confirmsignup").onclick = async () => {
     }
 };
 
-// --- LOG IN ---
+
 document.getElementById("confirmlogin").onclick = async () => {
     const email = document.getElementById("emaillogin").value;
     const password = document.getElementById("password").value;
@@ -56,7 +55,6 @@ document.getElementById("confirmlogin").onclick = async () => {
 };
 
 
-// --- CHECK IF USER ALREADY LOGGED IN ---
 async function checkUser() {
     const { data: { user } } = await supabase.auth.getUser();
     if (user) {

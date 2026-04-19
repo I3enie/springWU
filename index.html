@@ -32,12 +32,13 @@
 <div class="fade-layer" ></div>
 <script src="js/java.js"></script>
 <script type="module" src="js/matches.js">
+    
     import { loadMatches } from "./js/matches.js";
     
     loadMatches("ongoing");
     
-    // Auto-refresh every 20 seconds
     setInterval(() => loadMatches("ongoing"), 20000);
+
 </script>
 </body>
 </html>

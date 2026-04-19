@@ -325,7 +325,7 @@ footer{
     background-color: var(--background2);
     border-top: 2px solid var(--contrast);
 }
-#abouttext{
+.abouttext{
     color: var(--contrast);
     font-size: 25px;
     

@@ -6,7 +6,7 @@ const SUPABASE_ANON_KEY =
 
 const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-// We export the function so HTML can import it
+
 export async function loadMatches(status) {
 
     const container = document.getElementById(`match-list-${status}`);
@@ -49,7 +49,7 @@ export async function loadMatches(status) {
     </div>
 `).join("");
 
-// Listener 1 - toggle prediction menu
+
 container.querySelectorAll(".predictbutton").forEach((button) => {
     button.addEventListener("click", () => {
         const menu = button.closest(".match").querySelector(".predictionmenu");
@@ -58,7 +58,7 @@ container.querySelectorAll(".predictbutton").forEach((button) => {
     });
 });
 
-// Listener 2 - submit prediction
+
 container.querySelectorAll(".match").forEach((matchEl) => {
     const matchIndex = Array.from(container.querySelectorAll(".match")).indexOf(matchEl);
     const matchData = data[matchIndex];

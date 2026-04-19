@@ -22,7 +22,7 @@ async function fetchMatchFromPandascore(matchId) {
 async function evaluatePredictionsAndAwardPoints() {
   console.log("\n--- Evaluating predictions ---");
 
-  // 1. Get all unscored predictions first
+
   const { data: predictions, error: predError } = await supabase
     .from("predictions")
     .select("user_id, match_id, predicted_winner")
@@ -33,7 +33,6 @@ async function evaluatePredictionsAndAwardPoints() {
 
   console.log(`Found ${predictions.length} unscored predictions`);
 
-  // 2. Look up only the matches that have been predicted
   const predMatchIds = [...new Set(predictions.map(p => p.match_id))];
   const { data: completedMatches, error: matchError } = await supabase
     .from("matches")
@@ -46,7 +45,6 @@ async function evaluatePredictionsAndAwardPoints() {
   const winnerByMatchId = Object.fromEntries((completedMatches || []).map(m => [m.id, m.winner]));
   const completedMatchIds = new Set((completedMatches || []).map(m => m.id));
 
-  // 3. For matches not in DB, fetch directly from PandaScore
   const missingMatchIds = predMatchIds.filter(id => !completedMatchIds.has(id));
   console.log(`${missingMatchIds.length} matches not in DB, checking PandaScore...`);
 
@@ -61,13 +59,13 @@ async function evaluatePredictionsAndAwardPoints() {
     }
   }
 
-  // 4. Only score predictions where the match is finished
+
   const scorablePredictions = predictions.filter(p => completedMatchIds.has(p.match_id));
   console.log(`Scorable predictions: ${scorablePredictions.length}`);
 
   if (!scorablePredictions.length) { console.log("No predictions ready to score yet."); return; }
 
-  // 5. Tally points per user
+
   const pointsToAdd = {};
   for (const p of scorablePredictions) {
     if (p.predicted_winner === winnerByMatchId[p.match_id]) {
@@ -77,7 +75,7 @@ async function evaluatePredictionsAndAwardPoints() {
 
   console.log(`Awarding points to ${Object.keys(pointsToAdd).length} users`);
 
-  // 6. Award points and update username
+
   for (const [userId, pts] of Object.entries(pointsToAdd)) {
     const { data: { user }, error: userError } = await supabase.auth.admin.getUserById(userId);
     if (userError) { console.error(`Error fetching user ${userId}:`, userError); continue; }
@@ -99,7 +97,6 @@ async function evaluatePredictionsAndAwardPoints() {
     }
   }
 
-  // 7. Mark predictions as scored
   const { error: updateError } = await supabase
     .from("predictions")
     .upsert(

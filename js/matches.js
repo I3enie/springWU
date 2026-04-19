@@ -46,8 +46,7 @@ async function loadMatches() {
     }
 }
 
-// Load matches when page opens
+
 loadMatches();
 
-// Optional: refresh every 20s
 setInterval(loadMatches, 20000);
